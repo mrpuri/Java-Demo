@@ -27,6 +27,14 @@ public String getUsernameFromToken(String token) {
 return getClaimFromToken(token, Claims::getSubject);
 }
 
+public String getUsertypeFromToken(String token) {
+	final Claims claims = getAllClaimsFromToken(token);
+	
+	
+	//1String usertype = claims.get(Usertype);
+return claims.get("Usertype").toString();
+}
+
 //retrieve expiration date from jwt token
 public Date getExpirationDateFromToken(String token) {
 return getClaimFromToken(token, Claims::getExpiration);
@@ -49,8 +57,9 @@ return expiration.before(new Date());
 }
 
 //generate token for user
-public String generateToken(UserDetails userDetails) {
+public String generateToken(UserDetails userDetails, String userType) {
 Map<String, Object> claims = new HashMap<>();
+claims.put("Usertype", userType);
 return doGenerateToken(claims, userDetails.getUsername());
 }
 

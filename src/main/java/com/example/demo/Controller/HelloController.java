@@ -30,7 +30,7 @@ public class HelloController {
     @GetMapping({"/hello"})
     public String henllo(Model model, @RequestParam(value="name", required=false, defaultValue="World") String name) {
         model.addAttribute("name", name);
-        return "index";
+        return "webapp/WEB-INF/jsp/index.jsp";
     }
  
     
@@ -76,12 +76,7 @@ public class HelloController {
     }
    
     
-    @PostMapping("/create")
-    public String create(@RequestBody Users user){
-    // save a single Customer
-    	userService.Create(user);
-    return "hello";
-    }
+
 }
 
 
