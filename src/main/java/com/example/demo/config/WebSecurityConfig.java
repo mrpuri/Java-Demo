@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,16 +55,24 @@ protected void configure(HttpSecurity httpSecurity) throws Exception {
 // We don't need CSRF for this example
 httpSecurity.csrf().disable()
 // dont authenticate this particular request
-.authorizeRequests().antMatchers("/authenticate","/get").permitAll().
+.authorizeRequests().antMatchers("/authenticate").permitAll().
 // all other requests need to be authenticated
-anyRequest().authenticated().and().
-// make sure we use stateless session; session won't be used to
-// store user's state.
-exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 // Add a filter to validate the tokens with every request 
 httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
+}
+
+@Bean
+public FilterRegistrationBean<PreFilter> loggingFilter(){
+    FilterRegistrationBean<PreFilter> registrationBean 
+      = new FilterRegistrationBean<>();
+         
+    registrationBean.setFilter(new PreFilter());
+    registrationBean.addUrlPatterns("/get");
+         
+    return registrationBean;    
 }
 
 }
