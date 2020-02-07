@@ -2,34 +2,22 @@ package com.example.demo.Controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
 import javax.servlet.ServletException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.RequestEntity.BodyBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.config.JwtRequestFilter;
 import com.example.demo.config.JwtTokenUtil;
-import com.example.demo.config.PreFilter;
-import com.example.demo.config.WebSecurityConfig;
 import com.example.demo.model.ErrorResponse;
 import com.example.demo.model.JwtRequest;
 import com.example.demo.model.JwtResponse;
@@ -40,9 +28,7 @@ import com.example.demo.test.Users;
 @Controller
 @CrossOrigin
 public class JwtAuthenticationController {
-	
-	@Autowired
-	PreFilter preFilter;
+
 
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
@@ -118,6 +104,11 @@ public class JwtAuthenticationController {
 
 		
 		return ResponseEntity.ok(Usertype);
+	}
+	
+	@GetMapping(value = "/getRedis")
+	public ResponseEntity<?> RedisData(){
+		return ResponseEntity.ok("ok");
 	}
 
 }

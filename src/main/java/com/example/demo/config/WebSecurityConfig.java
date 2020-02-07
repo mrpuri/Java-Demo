@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -63,7 +65,6 @@ anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(
 httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 }
-
 @Bean
 public FilterRegistrationBean<PreFilter> loggingFilter(){
     FilterRegistrationBean<PreFilter> registrationBean 
@@ -74,5 +75,19 @@ public FilterRegistrationBean<PreFilter> loggingFilter(){
          
     return registrationBean;    
 }
+
+@Bean
+JedisConnectionFactory jedisConnectionFactory() {
+    return new JedisConnectionFactory();
+}
+ 
+@Bean
+public RedisTemplate<String, String> redisTemplate() {
+    RedisTemplate<String, String> template = new RedisTemplate<>();
+    template.setConnectionFactory(jedisConnectionFactory());
+    return template;
+}
+
+
 
 }

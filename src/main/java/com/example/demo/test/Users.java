@@ -2,8 +2,11 @@ package com.example.demo.test;
 
 import javax.persistence.*;
 
+import org.springframework.data.redis.core.RedisHash;
+
 @Entity
 @Table(name="users", schema = "public")
+@RedisHash("Users")
 public class Users {
 @Id
 private String username;

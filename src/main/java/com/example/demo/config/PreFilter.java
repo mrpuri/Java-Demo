@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
-@Component
+//@Component
 @Order(1)
 public class PreFilter implements Filter {
 	

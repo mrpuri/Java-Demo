@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.City;
 
 @Service
 public class UserService implements IUserService {
